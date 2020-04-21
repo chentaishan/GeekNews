@@ -67,19 +67,22 @@ public class VtexPresenter extends RxPresenter<VtexContract.View> implements Vte
                         for (int i = 0; i < count; i++) {
                             Elements titleElements = itemElements.get(i).select("div.cell.item table tr td span.item_title > a");   //标题
                             Elements imgElements = itemElements.get(i).select("div.cell.item table tr td img.avatar");              //头像
-                            Elements nodeElements = itemElements.get(i).select("div.cell.item table tr span.small.fade a.node");    //节点
                             Elements commentElements = itemElements.get(i).select("div.cell.item table tr a.count_livid");          //评论数
+
+
+                            Elements nodeElements = itemElements.get(i).select("div.cell.item table tr span.small.fade a.node");    //节点
                             Elements nameElements = itemElements.get(i).select("div.cell.item table tr span.small.fade strong a");  //作者 & 最后回复
                             Elements timeElements = itemElements.get(i).select("div.cell.item table tr span.small.fade");           //更新时间
 
                             TopicListBean bean = new TopicListBean();
+
 
                             if (titleElements.size() > 0) {
                                 bean.setTitle(titleElements.get(0).text());
                                 bean.setTopicId(parseId(titleElements.get(0).attr("href")));
                             }
                             if (imgElements.size() > 0) {
-                                bean.setImgUrl(parseImg(imgElements.get(0).attr("src")));
+                                bean.setImgUrl(parseImg(imgElements.get(0).attr("src"))); // http:
                             }
                             if (nodeElements.size() > 0) {
                                 bean.setNode(nodeElements.get(0).text());

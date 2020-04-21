@@ -4,6 +4,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -109,8 +110,11 @@ public class TechFragment extends RootFragment<TechPresenter> implements TechCon
                 } else {
                     swipeRefresh.setEnabled(false);
                     float rate = (float)(SystemUtil.dp2px(mContext, 256) + verticalOffset * 2) / SystemUtil.dp2px(mContext, 256);
-                    if (rate >= 0)
+                    if (rate >= 0){
+
                     ivOrigin.setAlpha(rate);
+                        Log.d(TAG, "onOffsetChanged: "+rate);
+                    }
                 }
             }
         });
@@ -149,8 +153,10 @@ public class TechFragment extends RootFragment<TechPresenter> implements TechCon
         isLoadingMore = false;
     }
 
+    private static final String TAG = "TechFragment";
     @Override
     public void showGirlImage(String url, String copyright) {
+        Log.d(TAG, "showGirlImage: "+url);
         ImageLoader.load(mContext, url, ivOrigin);
         Glide.with(mContext).load(url).bitmapTransform(new BlurTransformation(mContext)).into(ivBlur);
         tvCopyright.setText(String.format("by: %s",copyright));

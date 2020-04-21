@@ -31,6 +31,7 @@ public interface VtexApis {
 
     /**
      * 获取主题列表
+     * https://www.v2ex.com/api/topics/show.json?node_name=qna
      * @return
      */
     @GET("/api/topics/show.json")

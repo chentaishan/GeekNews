@@ -5,6 +5,7 @@ import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -39,12 +40,15 @@ public class NodeActivity extends SimpleActivity {
         return R.layout.activity_node;
     }
 
+    private static final String TAG = "NodeActivity";
     @Override
     protected void initEventAndData() {
         setToolBar(toolBar, "节点导航");
         XmlResourceParser xmlParser = this.getResources().getXml(R.xml.nodes);
         try {
             map = XmlUtil.parseNodes(xmlParser);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -57,6 +61,7 @@ public class NodeActivity extends SimpleActivity {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 mTitleHeight = tvNodeTitle.getHeight();
+                Log.d(TAG, "onScrollStateChanged: "+mTitleHeight);
             }
 
             @Override
@@ -66,7 +71,9 @@ public class NodeActivity extends SimpleActivity {
                 if (view != null) {
                     if (view.getTop() <= mTitleHeight) {
                         tvNodeTitle.setY(-(mTitleHeight - view.getTop()));
+                        Log.d(TAG, "onScrolled: "+(mTitleHeight - view.getTop()));
                     } else {
+                        Log.d(TAG, "onScrolled: setY(0);");
                         tvNodeTitle.setY(0);
                     }
                 }
@@ -75,6 +82,8 @@ public class NodeActivity extends SimpleActivity {
                     tvNodeTitle.setY(0);
                     if (map != null) {
                         tvNodeTitle.setText(map.keyAt(mCurrentPosition));
+
+                        Log.d(TAG, "onScrolled:map.keyAt(mCurrentPosition)"+map.keyAt(mCurrentPosition));
                     }
                 }
             }
